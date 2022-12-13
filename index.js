@@ -1,3 +1,6 @@
+import stoptime from './controls.js'
+import {countdown, resetTimer} from './timer.js'
+
 let buttonPlay = document.querySelector('.play')
 let buttonPause = document.querySelector('.pause');
 let buttonStop = document.querySelector('.stop')
@@ -19,28 +22,6 @@ buttonStop.addEventListener('click', function(){
   resetTimer();
 });
 
-
-function countdown(){
-    timerTimeout = setTimeout(function(){
-    let segundos =  Number(segundosDisplay.innerText);
-    let minutos = Number(minutosDisplay.innerText);
-
-    updateTimer(minutos, 0);
-
-    if(minutos <= 0 && segundos <= 0){
-      stoptime();
-      return;
-    }
-
-    if(segundos <= 0) {
-      segundos = 60;
-      --minutos;
-    } updateTimer(minutos, String(segundos - 1))
-
-    countdown();
-  }, 1000) 
-}
-
 function play(){
       buttonPlay.classList.add('hide');
       buttonPause.classList.remove('hide');
@@ -57,14 +38,6 @@ function pause(){
 
 }
 
-function stoptime(){
-  buttonPlay.classList.remove('hide');
-  buttonPause.classList.add('hide');
-  buttonStop.classList.toggle('hide');
-  buttonSet.classList.toggle('hide')
-  
-}
-
 function somOnOff(){
   buttonSomOn.classList.toggle('hide');
   buttonSomOff.classList.toggle('hide');
@@ -75,12 +48,5 @@ function inputTempo(){
   updateTimer(minutos, 0)
 }
 
-function updateTimer(minutos, segundos){
-  minutosDisplay.innerText = String(minutos).padStart(2, '0'); 
-  segundosDisplay.innerText = String(segundos).padStart(2, '0'); 
-}
 
-function resetTimer(){
-  updateTimer(minutos, 0);
-  clearTimeout(timerTimeout)
-}
+
