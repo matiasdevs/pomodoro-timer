@@ -1,5 +1,5 @@
-import stoptime from './controls.js'
-import {countdown, resetTimer} from './timer.js'
+import Controls from './controls.js'
+import Timer from './timer.js'
 
 let buttonPlay = document.querySelector('.play')
 let buttonPause = document.querySelector('.pause');
@@ -10,42 +10,55 @@ let buttonSomOff = document.querySelector('.som-off');
 let minutosDisplay = document.querySelector('.minutos')
 let segundosDisplay = document.querySelector('.segundos')
 let minutos = Number(minutosDisplay.innerText);
-let timerTimeout
+let timerTimeout;
 
-buttonPlay.addEventListener('click', play);
-buttonPause.addEventListener('click', pause);
-buttonSomOn.addEventListener('click', somOnOff);
-buttonSomOff.addEventListener('click', somOnOff);
-buttonSet.addEventListener('click', inputTempo)
-buttonStop.addEventListener('click', function(){
-  stoptime();
-  resetTimer();
+const controls = Controls({
+  buttonPlay,
+  buttonPause,
+  buttonStop,
+  buttonSet
+})
+
+const timer = Timer({
+  minutosDisplay,
+  segundosDisplay,
+  timerTimeout,
+  resetControls: controls.reset,
+  minutos
+})
+
+buttonPlay.addEventListener('click', function(){
+  controls.play();
+  timer.countdown();
 });
 
-function play(){
-      buttonPlay.classList.add('hide');
-      buttonPause.classList.remove('hide');
-      buttonStop.classList.remove('hide');
-      buttonSet.classList.add('hide')
-
-  countdown()
-}
-
-function pause(){
-  buttonPause.classList.add('hide');
-  buttonPlay.classList.remove('hide');
+buttonPause.addEventListener('click', function(){
+  controls.pause();
   clearTimeout(timerTimeout);
+});
 
-}
+buttonStop.addEventListener('click', function(){
+  controls.reset();
+  timer.reset();
+});
+
+buttonSet.addEventListener('click', function(){
+  let newMinutes = controls.getMinutes();
+  if(!newMinutes){
+    timer.reset();
+    return
+  }
+    minutos = newMinutes;
+    timer.updateTimer(minutos, 0)
+    timer.updateMinutes(minutos)
+})
+
+buttonSomOn.addEventListener('click', somOnOff);
+buttonSomOff.addEventListener('click', somOnOff);
 
 function somOnOff(){
   buttonSomOn.classList.toggle('hide');
   buttonSomOff.classList.toggle('hide');
-}
-
-function inputTempo(){
-  minutos = prompt('Digite a quantidade de minutos: ') || 0
-  updateTimer(minutos, 0)
 }
 
 
