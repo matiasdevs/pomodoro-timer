@@ -9,8 +9,7 @@ let buttonSomOn = document.querySelector('.som-on');
 let buttonSomOff = document.querySelector('.som-off');
 let minutosDisplay = document.querySelector('.minutos')
 let segundosDisplay = document.querySelector('.segundos')
-let minutos = Number(minutosDisplay.innerText);
-let timerTimeout;
+
 
 const controls = Controls({
   buttonPlay,
@@ -22,9 +21,7 @@ const controls = Controls({
 const timer = Timer({
   minutosDisplay,
   segundosDisplay,
-  timerTimeout,
   resetControls: controls.reset,
-  minutos
 })
 
 buttonPlay.addEventListener('click', function(){
@@ -34,7 +31,7 @@ buttonPlay.addEventListener('click', function(){
 
 buttonPause.addEventListener('click', function(){
   controls.pause();
-  clearTimeout(timerTimeout);
+  timer.pause();
 });
 
 buttonStop.addEventListener('click', function(){
@@ -48,9 +45,8 @@ buttonSet.addEventListener('click', function(){
     timer.reset();
     return
   }
-    minutos = newMinutes;
-    timer.updateTimer(minutos, 0)
-    timer.updateMinutes(minutos)
+    timer.updateTimer(newMinutes, 0)
+    timer.updateMinutes(newMinutes)
 })
 
 buttonSomOn.addEventListener('click', somOnOff);
