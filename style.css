@@ -35,7 +35,7 @@ background: linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(6,25,10,1) 49%, rgba(22
   align-self: end;
   justify-self: end;
 
-  padding: 0 4rem 4rem 0;
+  padding: 0 4rem 8rem 0;
  }
 .timer {
   font-size: clamp(4.4rem, 4.4rem + 10vw, 8.8rem);
