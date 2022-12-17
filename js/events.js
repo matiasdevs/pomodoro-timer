@@ -41,13 +41,13 @@ export default function({controls, timer, sound}) {
   buttonSomOn.addEventListener('click', function(){
     buttonSomOn.classList.add('hide');
     buttonSomOff.classList.remove('hide');
-    sound.bgAudio.play()
+    sound.bgAudio.pause()
   });
-
+  
   buttonSomOff.addEventListener('click', function(){
     buttonSomOn.classList.remove('hide');
     buttonSomOff.classList.add('hide');
-    sound.bgAudio.pause()
+    sound.bgAudio.play()
   });
 
 }
